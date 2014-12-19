@@ -1,13 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <style>
+::-webkit-scrollbar {
+width: 15px;
+height: 15px;
+}
+
+
+::-webkit-scrollbar-track-piece  {
+background-color: black;
+}
+
+::-webkit-scrollbar-thumb:vertical {
+height: 30px;
+background-color: grey;
+}
+  </style>
 </head>
 <body>
   <h1>Chat Room</h1>
 
+  <div class="chatbox" style="height: 400px; width:800px; border: 1px solid black; 
+    overflow-y: scroll;"></div>
+  <input class="input" type="text">
+  <button onclick="sendMessage()">Submit Message</button>
+
   <script src="/socket.io/socket.io.js"></script>
   <script>
+  ////the socket is the boat on the stream///////
     var socket = io();
+
+    ////eventHandler//////
+    var sendMessage = function() {
+      ///Get's the first class with name 'input'
+      var userMessage = document.getElementsByClassName('input')[0].value;
+      /////Emits to server side////
+      socket.emit('message', userMessage);
+    };
+    /////the lisener//////, 
+    socket.on('chatroom', function(m){
+      console.log(m);
+      //document.getElementsByClassName('chatbox')[0].innerHTML = m;
+
+      var p = document.createElement("p");
+      p.innerHTML = m;
+      document.getElementsByClassName("chatbox")[0].appendChild(p)});
   </script>
 </body>
-</html>
+</html
+
+    
